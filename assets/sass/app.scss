@@ -1,0 +1,125 @@
+@import "variables";
+
+html {
+    background: red;
+}
+
+.wrapper {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.carousel-main {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: blanchedalmond;
+    overflow: hidden;
+}
+
+.carousel-context {
+    list-style: none;
+}
+
+.carousel-item {
+    a {
+        display: flex;
+        width: 100%;
+    }
+
+    img {
+        width: 100%;
+    }
+}
+
+.carousel-controls {
+    position: absolute;
+    z-index: 5;
+    background: chartreuse;
+    height: 44px;
+
+    bottom: 30px;
+    left: 140px;
+    right: 140px;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.carousel-toggle-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 0.25rem;
+    margin-right: 18px;
+
+    svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+.carousel-pagers {
+    position: relative;
+    list-style: none;
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        width: 100%;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.4);
+    }
+}
+
+.carousel-pager-item {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    &.current {
+        .carousel-pager-button {
+            background: $color-primary;
+            width: 22px;
+            height: 22px;
+            border-color: transparent;
+        }
+    }
+}
+
+.carousel-pager-button {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    border: 1px solid rgb(180, 180, 180);
+    border-radius: 50%;
+}
+
+.carousel-pager-progress {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    width: 100%;
+    height: 2px;
+    background: $color-primary;
+    transform-origin: left center;
+}
