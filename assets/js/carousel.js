@@ -69,13 +69,20 @@ function Carousel() {
         this.resetProgressBars()
         // reset current progress
         progress = 0
+
+        // fill out all of previous progressbars
+        if (i > 0) {
+          for (let w = 0; w < i; w++) {
+            this.setProgressBarProgressByIndex(w, 1.0)
+          }
+        }
       })
     });
 
     this.resetProgressBars();
     this.checkAndSetCurrentEntry();
     this.checkAndSetCurrentDisplayImage();
-    
+
     numberOfCarousels = this.getNumberOfCarousels();
     numberOfDisplayImages = this.getNumberOfDisplayImages();
 
@@ -321,6 +328,21 @@ function Carousel() {
       // clear all `prev` since we rearched the last entry
       this.hideAllDisplayImages();
     }
+  }
+
+  this.setProgressBarProgressByIndex = function (index, progress) {
+    let entry = this.getEntryByIndex(index)
+    let pagerProgressBarElement = $(entry).children(".carousel-pager-progress");
+
+    if (!pagerProgressBarElement) {
+      this.log("ERR: failed to locate `carousel-pager-progress` in its children");
+      return;
+    }
+
+    $(pagerProgressBarElement).css(
+      "transform",
+      `translate3d(0px, 0px, 0px) scale(${progress}, 1)`
+    );
   }
 
   // increase progressbar of current entry
