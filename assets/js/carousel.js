@@ -10,6 +10,10 @@ function Carousel() {
   var carouselProgressTimer;
   var numberOfCarousels, numberOfDisplayImages = null;
 
+  var progress = 0;
+  var maxProgress = 1.0;
+  var interval = 50;
+
   // debug-dedicated logger function that just wraps `console.log`
   this.log = function () {
     if (isDebug) {
@@ -50,15 +54,41 @@ function Carousel() {
       console.log(playState);
     });
 
+    // event handler for dot pager buttons
+    $(".carousel-pager-button").each((i, v) => {
+      this.log(`register button event (${i})`)
+
+      $(v).on("click", () => {
+        let currentEntry = this.getCurrentEntryContextAndIndex()
+        let currentDisplayImageEntry = this.getCurrentDisplayImageContextAndIndex()
+
+        this.switchCurrentEntryByIndex(currentEntry.index, i);
+        this.switchDisplayImageByIndex(currentDisplayImageEntry.index, i)
+
+        // reset all of progressbars
+        this.resetProgressBars()
+        // reset current progress
+        progress = 0
+      })
+    });
+
     this.resetProgressBars();
     this.checkAndSetCurrentEntry();
     this.checkAndSetCurrentDisplayImage();
+    
     numberOfCarousels = this.getNumberOfCarousels();
     numberOfDisplayImages = this.getNumberOfDisplayImages();
 
     isInitialized = true;
     this.log("the carousel initialized successfully");
   };
+
+  this.resetProgressBarByIndex = function (index) {
+    $($(".carousel-pager-progress")[index]).css(
+      "transform",
+      "translate3d(0px, 0px, 0px) scale(0, 1)"
+    );
+  }
 
   this.resetProgressBars = function () {
     this.log("resetting progressbars...");
@@ -324,10 +354,6 @@ function Carousel() {
     }
 
     this.log("playing...");
-
-    var progress = 0;
-    var maxProgress = 1.0;
-    var interval = 50;
     
     carouselProgressTimer = window.setInterval(() => {
       if (progress >= maxProgress) {
