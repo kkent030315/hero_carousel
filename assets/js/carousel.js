@@ -95,8 +95,8 @@ function Carousel() {
 
   this.hideDisplayImageByIndex = function (index) {
     let x = $(this.getDisplayImageByIndex(index));
-    if (!x.hasClass("hide")) {
-      x.addClass("hide");
+    if (x.hasClass("current")) {
+      x.removeClass("current");
     }
   }
 
