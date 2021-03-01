@@ -118,6 +118,7 @@ function Carousel() {
     $(this.getEntryByIndex(index)).addClass("current");
   };
 
+  // switch into the next index and erase previous index
   this.switchCurrentEntryByIndex = function (prevIndex, nextIndex) {
     $(this.getEntryByIndex(prevIndex)).removeClass("current");
     this.setCurrentEntryByIndex(nextIndex);
@@ -157,6 +158,7 @@ function Carousel() {
     }
   };
 
+  // switch into the next index and erase previous index
   this.switchDisplayImageByIndex = function (prevIndex, nextIndex) {
     this.hideDisplayImageByIndex(prevIndex);
     this.setCurrentDisplayImageByIndex(nextIndex);
@@ -270,8 +272,6 @@ function Carousel() {
 
   // returns index and context for current entry
   this.getCurrentEntryContextAndIndex = function () {
-    // no need to call this every single time since it's called at `init` ?
-    // this.checkAndSetCurrentEntry();
     let result = {};
     $(".carousel-pagers")
       .children(".carousel-pager-item")
@@ -429,7 +429,7 @@ function Carousel() {
 
     clearInterval(carouselProgressTimer);
     carouselProgressTimer = null;
-    
+
     playState = CAROUSEL_STATES.PAUSED;
   };
 }
