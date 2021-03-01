@@ -15,7 +15,7 @@ html {
     position: relative;
     width: 100%;
     height: 100vh;
-    background: blanchedalmond;
+    background: $color-carousel-background;
     overflow: hidden;
 }
 
@@ -26,15 +26,13 @@ html {
 }
 
 .carousel-item {
-    position: absolute;
     visibility: visible;
+    position: absolute;
+    z-index: 1;
     top: 0;
+    right: 0;
     bottom: 0;
     left: 0;
-    right: 0;
-
-    width: 100%;
-    height: 100%;
 
     .carousel-item-inner {
         position: relative;
@@ -48,43 +46,69 @@ html {
         bottom: 0;
         left: 0;
         right: 0;
+        transition: transform 1.1s 0.6s cubic-bezier(0.4, 0, 0.22, 1),
+            -webkit-transform 1.1s 0.6s cubic-bezier(0.4, 0, 0.22, 1);
+        transform: translateX(200%);
     }
 
     a {
-        display: flex;
-        width: 100%;
-    }
-
-    img {
-        width: 100%;
-        transform: translateX(-100%);
-        transition: transform 1.1s 0.6s cubic-bezier(0.4, 0, 0.22, 1),
-            -webkit-transform 1.1s 0.6s cubic-bezier(0.4, 0, 0.22, 1);
+        transition: color 0.25s cubic-bezier(0.23, 1, 0.58, 1);
     }
 
     .carousel-item-image-container {
+        overflow: hidden;
         position: absolute;
         top: 0;
+        right: 0;
         bottom: 0;
         left: 0;
-        right: 0;
-        overflow: hidden;
+        border-radius: 0;
+        -webkit-transition: border-radius 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1),
+            -webkit-transform 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1);
+        transition: border-radius 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1),
+            -webkit-transform 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1);
+        transition: border-radius 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1),
+            transform 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1);
+        transition: border-radius 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1),
+            transform 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1), -webkit-transform 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1);
+        -webkit-transform: scale(0.55);
+        -ms-transform: scale(0.55);
         transform: scale(0.55);
-        transition: border-radius 0.7s cubic-bezier(0.4, 0, 0.22, 1), transform 0.7s cubic-bezier(0.4, 0, 0.22, 1),
-            -webkit-transform 0.7s cubic-bezier(0.4, 0, 0.22, 1);
+    }
+
+    .carousel-background-image {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        -webkit-transition: -webkit-transform 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1);
+        transition: -webkit-transform 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1);
+        transition: transform 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1);
+        transition: transform 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1),
+            -webkit-transform 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1);
+        -webkit-transform: scale(0.55);
+        -ms-transform: scale(0.55);
+        transform: scale(0.55);
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
     }
 
     &.current {
-        .carousel-item-image-container {
+        .carousel-item-image-container,
+        .carousel-background-image {
             transform: scale(1);
         }
 
         .carousel-item-image {
-            img {
-                transform: translateX(0%);
-                //transition: transform 0.7s cubic-bezier(0.4, 0, 0.22, 1),
-                //    -webkit-transform 0.7s cubic-bezier(0.4, 0, 0.22, 1);
-            }
+            transform: translateX(0);
+        }
+    }
+
+    &.prev {
+        .carousel-item-image {
+            transform: translateX(-100%) scale(0.55);
         }
     }
 }

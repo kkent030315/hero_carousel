@@ -91,12 +91,28 @@ function Carousel() {
     if (!x.hasClass("current")) {
       x.addClass("current");
     }
+    if (x.hasClass("prev")) {
+      x.removeClass("prev");
+    }
   }
 
   this.hideDisplayImageByIndex = function (index) {
     let x = $(this.getDisplayImageByIndex(index));
     if (x.hasClass("current")) {
       x.removeClass("current");
+    }
+    if (x.hasClass("prev")) {
+      x.removeClass("prev")
+    }
+    x.addClass("prev")
+  }
+
+  this.hideAllDisplayImages = function () {
+    for (let i = 0; i < numberOfDisplayImages; i++) {
+      let x = $(this.getDisplayImageByIndex(i));
+      if (x.hasClass("prev")) {
+        x.removeClass("prev")
+      }
     }
   }
 
@@ -269,6 +285,11 @@ function Carousel() {
     this.log(`next carousel display image index is ${nextDisplayImageIndex}`);
 
     this.switchDisplayImageByIndex(currentDisplayImageEntry.index, nextDisplayImageIndex)
+
+    if (nextDisplayImageIndex === 0) {
+      // clear all `prev` since we rearched the last entry
+      this.hideAllDisplayImages();
+    }
   }
 
   // increase progressbar of current entry
