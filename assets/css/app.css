@@ -37,6 +37,14 @@ html {
   width: 100%;
 }
 
+.carousel-item.current {
+  display: block;
+}
+
+.carousel-item.hide {
+  display: none;
+}
+
 .carousel-controls {
   position: absolute;
   z-index: 5;

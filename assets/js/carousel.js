@@ -8,7 +8,7 @@ function Carousel() {
   var isInitialized = false;
   var playState = CAROUSEL_STATES.PAUSED;
   var carouselProgressTimer;
-  var numberOfCarousels = null;
+  var numberOfCarousels, numberOfDisplayImages = null;
 
   // debug-dedicated logger function that just wraps `console.log`
   this.log = function () {
@@ -51,7 +51,9 @@ function Carousel() {
 
     this.resetProgressBars();
     this.checkAndSetCurrentEntry();
+    this.checkAndSetCurrentDisplayImage();
     numberOfCarousels = this.getNumberOfCarousels();
+    numberOfDisplayImages = this.getNumberOfDisplayImages();
 
     isInitialized = true;
     this.log("the carousel initialized successfully");
@@ -79,6 +81,89 @@ function Carousel() {
     $(this.getEntryByIndex(prevIndex)).removeClass("current");
     this.setCurrentEntryByIndex(nextIndex);
   };
+
+  this.getDisplayImageByIndex = function (index) {
+    return $(".carousel-context").children(".carousel-item")[index];
+  }
+
+  this.setCurrentDisplayImageByIndex = function (index) {
+    let x = $(this.getDisplayImageByIndex(index));
+    if (!x.hasClass("current")) {
+      x.addClass("current");
+    }
+  }
+
+  this.hideDisplayImageByIndex = function (index) {
+    let x = $(this.getDisplayImageByIndex(index));
+    if (!x.hasClass("hide")) {
+      x.addClass("hide");
+    }
+  }
+
+  this.switchDisplayImageByIndex = function (prevIndex, nextIndex) {
+    this.hideDisplayImageByIndex(prevIndex);
+    this.setCurrentDisplayImageByIndex(nextIndex);
+  }
+
+  this.getCurrentDisplayImageContextAndIndex = function () {
+    let result = {};
+    $(".carousel-context")
+      .children(".carousel-item")
+      .each((i, v) => {
+        if ($(v).hasClass("current")) {
+          result = {
+            context: v,
+            index: i,
+          };
+          return;
+        }
+      });
+    return result;
+  }
+
+  this.checkAndSetCurrentDisplayImage = function () {
+    let noCurrentDisplayImage = true;
+    let numberOfCurrentDisplayImages = 0;
+
+    $(".carousel-context")
+      .children(".carousel-item")
+      .each((i, v) => {
+        if ($(v).hasClass("current")) {
+          noCurrentDisplayImage = false;
+          numberOfCurrentDisplayImages++;
+        }
+      });
+    
+    if (noCurrentDisplayImage) {
+      // if there is no `current` entry found
+      this.log("there is no `current` entry in the carousel image items");
+      this.log("setting `current` entry in first image item...");
+
+      // set `current` in first item of `carousel-pagers`
+      this.setCurrentDisplayImageByIndex(0);
+
+      this.log("`current` entry of image has been set in first item");
+    } else if (numberOfCurrentDisplayImages > 1) {
+      // should not be happened but if there are multiple number of `current` entry
+      this.log(`there were ${numberOfCurrentDisplayImages} image entries found`);
+      this.log("erasing `current` from all of image items...");
+
+      // erase `current` from all of items
+      $(".carousel-context")
+        .children(".carousel-item")
+        .each((i, v) => {
+          $(v).removeClass("current");
+        });
+
+      // and set `current` entry in first item
+      this.setCurrentDisplayImageByIndex(0);
+
+      this.log("repaired sccessfully");
+    } else {
+      // only one `current` entry found
+      this.log("`current` entry found in the carousel image items");
+    }
+  }
 
   this.checkAndSetCurrentEntry = function () {
     let noCurrentEntry = true;
@@ -126,7 +211,8 @@ function Carousel() {
 
   // returns index and context for current entry
   this.getCurrentEntryContextAndIndex = function () {
-    this.checkAndSetCurrentEntry();
+    // no need to call this every single time since it's called at `init` ?
+    // this.checkAndSetCurrentEntry();
     let result = {};
     $(".carousel-pagers")
       .children(".carousel-pager-item")
@@ -145,6 +231,10 @@ function Carousel() {
   this.getNumberOfCarousels = function () {
     return $(".carousel-pagers").children(".carousel-pager-item").length;
   };
+
+  this.getNumberOfDisplayImages = function () {
+    return $(".carousel-context").children(".carousel-item").length;
+  }
 
   this.moveToNextCarouselEntry = function () {
     let currentEntry = this.getCurrentEntryContextAndIndex();
@@ -165,6 +255,21 @@ function Carousel() {
       this.resetProgressBars();
     }
   };
+
+  this.moveToNextDisplayImage = function () {
+    let currentDisplayImageEntry = this.getCurrentDisplayImageContextAndIndex();
+
+    this.log(`there are ${numberOfDisplayImages} carousel display images`);
+
+    let nextDisplayImageIndex =
+      currentDisplayImageEntry.index + 1 > numberOfDisplayImages - 1
+        ? 0
+        : currentDisplayImageEntry.index + 1;
+    
+    this.log(`next carousel display image index is ${nextDisplayImageIndex}`);
+
+    this.switchDisplayImageByIndex(currentDisplayImageEntry.index, nextDisplayImageIndex)
+  }
 
   // increase progressbar of current entry
   // `progress` parameter must have 0.0 - 1.0 floating value
@@ -208,6 +313,7 @@ function Carousel() {
         // to prevent floating number like 0.99000008 looked like a bit incomplete
         this.setCurrentEntryProgressBar(1.0);
         this.moveToNextCarouselEntry();
+        this.moveToNextDisplayImage();
         // reset the progress
         progress = 0;
         return;

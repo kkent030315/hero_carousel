@@ -32,6 +32,14 @@ html {
     img {
         width: 100%;
     }
+
+    &.current {
+        display: block;
+    }
+
+    &.hide {
+        display: none;
+    }
 }
 
 .carousel-controls {
