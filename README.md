@@ -1,6 +1,6 @@
 # hero_carousel
 
-Implementation of Hero Carousel used in (CyberAgent)[https://www.cyberagent.co.jp/]
+Implementation of Hero Carousel used in [CyberAgent](https://www.cyberagent.co.jp/)
 
 # Revisions
 
