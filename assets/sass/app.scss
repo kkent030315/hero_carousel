@@ -52,7 +52,10 @@ html {
     }
 
     a {
-        transition: color 0.25s cubic-bezier(0.23, 1, 0.58, 1);
+        position: relative;
+        display: flex;
+        width: 100%;
+        height: 100%;
     }
 
     .carousel-item-image-container {
@@ -63,17 +66,10 @@ html {
         bottom: 0;
         left: 0;
         border-radius: 0;
-        -webkit-transition: border-radius 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1),
-            -webkit-transform 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1);
         transition: border-radius 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1),
-            -webkit-transform 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1);
-        transition: border-radius 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1),
-            transform 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1);
-        transition: border-radius 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1),
-            transform 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1), -webkit-transform 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1);
-        -webkit-transform: scale(0.55);
-        -ms-transform: scale(0.55);
-        transform: scale(0.55);
+                    transform 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1),
+                    -webkit-transform 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1);
+        transform: scale($scale-min);
     }
 
     .carousel-background-image {
@@ -82,14 +78,8 @@ html {
         right: 0;
         bottom: 0;
         left: 0;
-        -webkit-transition: -webkit-transform 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1);
-        transition: -webkit-transform 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1);
         transition: transform 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1);
-        transition: transform 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1),
-            -webkit-transform 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1);
-        -webkit-transform: scale(0.55);
-        -ms-transform: scale(0.55);
-        transform: scale(0.55);
+        transform: scale($scale-min);
         background-repeat: no-repeat;
         background-position: center center;
         background-size: cover;
@@ -98,7 +88,7 @@ html {
     &.current {
         .carousel-item-image-container,
         .carousel-background-image {
-            transform: scale(1);
+            transform: scale($scale-max);
         }
 
         .carousel-item-image {
@@ -116,7 +106,6 @@ html {
 .carousel-controls {
     position: absolute;
     z-index: 5;
-    background: chartreuse;
     height: 44px;
 
     bottom: 30px;
@@ -125,6 +114,10 @@ html {
 
     display: flex;
     flex-direction: row;
+
+    svg {
+        fill: $color-carousel-controls;
+    }
 }
 
 .carousel-toggle-button {
