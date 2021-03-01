@@ -11,9 +11,9 @@ function Carousel() {
   var numberOfCarousels,
     numberOfDisplayImages = null;
 
-  var progress = 0;
-  var maxProgress = 1.0;
-  var interval = 50;
+  var currentProgress = 0;
+  const MAX_PROGRESS = 1.0;
+  const PROGRESS_INTERVAL = 50;
 
   // debug-dedicated logger function that just wraps `console.log`
   this.log = function () {
@@ -69,7 +69,7 @@ function Carousel() {
         // reset all of progressbars
         this.resetProgressBars();
         // reset current progress
-        progress = 0;
+        currentProgress = 0;
 
         // fill out all of previous progressbars
         if (i > 0) {
@@ -386,7 +386,7 @@ function Carousel() {
     this.log("playing...");
 
     carouselProgressTimer = window.setInterval(() => {
-      if (progress >= maxProgress) {
+      if (currentProgress >= MAX_PROGRESS) {
         this.log("carousel has ended");
         // to prevent floating number like 0.99000008 looked like a bit incomplete
         this.setCurrentEntryProgressBar(1.0);
@@ -395,15 +395,15 @@ function Carousel() {
         this.moveToNextDisplayImage();
 
         // reset the progress
-        progress = 0;
+        currentProgress = 0;
         return;
       }
 
       // this.log(`progress: ${progress}`);
-      this.setCurrentEntryProgressBar(progress);
+      this.setCurrentEntryProgressBar(currentProgress);
 
-      progress += 0.01;
-    }, interval);
+      currentProgress += 0.01;
+    }, PROGRESS_INTERVAL);
 
     this.log("the carousel is now playing");
     playState = CAROUSEL_STATES.PLAYING;
