@@ -65,7 +65,7 @@ function Carousel() {
       ) {
         $(".carousel-toggle-play").css("display", "block");
       } else if (
-        // repair if both "none"
+        // repair if both "block"
         $(".carousel-toggle-play").css("display") === "block" &&
         $(".carousel-toggle-pause").css("display") === "block"
       ) {
