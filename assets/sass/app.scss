@@ -26,9 +26,7 @@ html {
 }
 
 .carousel-item {
-    visibility: visible;
     position: absolute;
-    z-index: 1;
     top: 0;
     right: 0;
     bottom: 0;
@@ -46,9 +44,10 @@ html {
         bottom: 0;
         left: 0;
         right: 0;
+
+        transform: translateX(200%);
         transition: transform 1.1s 0.6s cubic-bezier(0.4, 0, 0.22, 1),
             -webkit-transform 1.1s 0.6s cubic-bezier(0.4, 0, 0.22, 1);
-        transform: translateX(200%);
     }
 
     a {
@@ -59,30 +58,35 @@ html {
     }
 
     .carousel-item-image-container {
-        overflow: hidden;
         position: absolute;
         top: 0;
-        right: 0;
         bottom: 0;
         left: 0;
+        right: 0;
+        
         border-radius: 0;
+
+        transform: scale($scale-min);
         transition: border-radius 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1),
                     transform 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1),
                     -webkit-transform 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1);
-        transform: scale($scale-min);
+        
+        overflow: hidden;
     }
 
     .carousel-background-image {
         position: absolute;
         top: 0;
-        right: 0;
         bottom: 0;
         left: 0;
+        right: 0;
+        
         transition: transform 0.4s 1.4s cubic-bezier(0.4, 0, 0.22, 1);
         transform: scale($scale-min);
+        
+        background-size: cover;
         background-repeat: no-repeat;
         background-position: center center;
-        background-size: cover;
     }
 
     &.current {
@@ -98,19 +102,17 @@ html {
 
     &.prev {
         .carousel-item-image {
-            transform: translateX(-100%) scale(0.55);
+            transform: translateX(-100%) scale($scale-min);
         }
     }
 }
 
 .carousel-controls {
     position: absolute;
-    z-index: 5;
     height: 44px;
-
-    bottom: 30px;
-    left: 140px;
-    right: 140px;
+    bottom: 20px;
+    left: 150px;
+    right: 150px;
 
     display: flex;
     flex-direction: row;
