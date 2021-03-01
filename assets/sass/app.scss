@@ -221,9 +221,12 @@ html {
     transform: translateX(200%);
     transition: transform 1.1s 0.5s cubic-bezier(0.4, 0, 0.22, 1);
     
-    .carousel-item-detail-title, .carousel-item-detail-category {
+    .carousel-item-detail-title,
+    .carousel-item-detail-category {
         width: 100%;
         font-weight: bold;
+        white-space: break-spaces;
+        word-break: break-all;
     }
 
     .carousel-item-detail-title {
