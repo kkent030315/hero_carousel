@@ -45,6 +45,7 @@ function Carousel() {
       $(".carousel-toggle-pause").css("display", isPlaying ? "none" : "block");
       $(".carousel-toggle-play").css("display", isPlaying ? "block" : "none");
 
+      isPlaying ? this.pause() : this.play()
       playState = isPlaying ? CAROUSEL_STATES.PLAYING : CAROUSEL_STATES.PAUSED;
       console.log(playState);
     });
@@ -362,7 +363,8 @@ function Carousel() {
     }
 
     clearInterval(carouselProgressTimer)
-    this.playState = CAROUSEL_STATES.PAUSED
+    carouselProgressTimer = null;
+    playState = CAROUSEL_STATES.PAUSED
   };
 }
 
