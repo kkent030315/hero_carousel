@@ -417,37 +417,7 @@ function Carousel() {
 }
 
 $(function () {
-  // event handler for play/pause button
-  //$(".carousel-toggle-button").on("click", function () {
-  //  let isPlaying = $(".carousel-toggle-play").css("display") === "none";
-  //  $(".carousel-toggle-pause").css("display", isPlaying ? "none" : "block");
-  //  $(".carousel-toggle-play").css("display", isPlaying ? "block" : "none");
-  //});
-
-  // reset all progressbars
-  //$(".carousel-pager-progress").each((i, v) => {
-  //  $(v).css("transform", "translate3d(0px, 0px, 0px) scale(0, 1)");
-  //});
-
-  /*$(".carousel-pagers")
-    .children(".carousel-pager-item")
-    .each((i, v) => {
-      console.log(`${i} => ${v}`);
-    });*/
-
   var carousel = new Carousel();
   carousel.init();
   carousel.play();
-
-  var execTests = function () {
-    window.setTimeout(() => {
-      console.log("`carousel.pause()` test");
-      carousel.pause();
-
-      window.setTimeout(() => {
-        console.log("`carousel.play()` test");
-        carousel.play();
-      }, 3000);
-    }, 8000);
-  }
 });
