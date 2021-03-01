@@ -113,9 +113,11 @@ html {
 
 .carousel-pager-item.current .carousel-pager-button {
   background: #0077ff;
-  width: 22px;
-  height: 22px;
+  -webkit-transform: scale(1.25);
+          transform: scale(1.25);
   border-color: transparent;
+  -webkit-transition: .5s ease;
+  transition: .5s ease;
 }
 
 .carousel-pager-button {

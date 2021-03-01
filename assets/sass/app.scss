@@ -93,9 +93,9 @@ html {
     &.current {
         .carousel-pager-button {
             background: $color-primary;
-            width: 22px;
-            height: 22px;
+            transform: scale(1.25);
             border-color: transparent;
+            transition: .5s ease;
         }
     }
 }
