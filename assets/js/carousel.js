@@ -8,7 +8,8 @@ function Carousel() {
   var isInitialized = false;
   var playState = CAROUSEL_STATES.PAUSED;
   var carouselProgressTimer;
-  var numberOfCarousels, numberOfDisplayImages = null;
+  var numberOfCarousels,
+    numberOfDisplayImages = null;
 
   var progress = 0;
   var maxProgress = 1.0;
@@ -49,34 +50,34 @@ function Carousel() {
       $(".carousel-toggle-pause").css("display", isPlaying ? "none" : "block");
       $(".carousel-toggle-play").css("display", isPlaying ? "block" : "none");
 
-      isPlaying ? this.pause() : this.play()
+      isPlaying ? this.pause() : this.play();
       playState = isPlaying ? CAROUSEL_STATES.PLAYING : CAROUSEL_STATES.PAUSED;
       console.log(playState);
     });
 
     // event handler for dot pager buttons
     $(".carousel-pager-button").each((i, v) => {
-      this.log(`register button event (${i})`)
+      this.log(`register button event (${i})`);
 
       $(v).on("click", () => {
-        let currentEntry = this.getCurrentEntryContextAndIndex()
-        let currentDisplayImageEntry = this.getCurrentDisplayImageContextAndIndex()
+        let currentEntry = this.getCurrentEntryContextAndIndex();
+        let currentDisplayImageEntry = this.getCurrentDisplayImageContextAndIndex();
 
         this.switchCurrentEntryByIndex(currentEntry.index, i);
-        this.switchDisplayImageByIndex(currentDisplayImageEntry.index, i)
+        this.switchDisplayImageByIndex(currentDisplayImageEntry.index, i);
 
         // reset all of progressbars
-        this.resetProgressBars()
+        this.resetProgressBars();
         // reset current progress
-        progress = 0
+        progress = 0;
 
         // fill out all of previous progressbars
         if (i > 0) {
           for (let w = 0; w < i; w++) {
-            this.setProgressBarProgressByIndex(w, 1.0)
+            this.setProgressBarProgressByIndex(w, 1.0);
           }
         }
-      })
+      });
     });
 
     this.resetProgressBars();
@@ -95,7 +96,7 @@ function Carousel() {
       "transform",
       "translate3d(0px, 0px, 0px) scale(0, 1)"
     );
-  }
+  };
 
   this.resetProgressBars = function () {
     this.log("resetting progressbars...");
@@ -122,7 +123,7 @@ function Carousel() {
 
   this.getDisplayImageByIndex = function (index) {
     return $(".carousel-context").children(".carousel-item")[index];
-  }
+  };
 
   this.setCurrentDisplayImageByIndex = function (index) {
     let x = $(this.getDisplayImageByIndex(index));
@@ -132,7 +133,7 @@ function Carousel() {
     if (x.hasClass("prev")) {
       x.removeClass("prev");
     }
-  }
+  };
 
   this.hideDisplayImageByIndex = function (index) {
     let x = $(this.getDisplayImageByIndex(index));
@@ -140,24 +141,24 @@ function Carousel() {
       x.removeClass("current");
     }
     if (x.hasClass("prev")) {
-      x.removeClass("prev")
+      x.removeClass("prev");
     }
-    x.addClass("prev")
-  }
+    x.addClass("prev");
+  };
 
   this.hideAllDisplayImages = function () {
     for (let i = 0; i < numberOfDisplayImages; i++) {
       let x = $(this.getDisplayImageByIndex(i));
       if (x.hasClass("prev")) {
-        x.removeClass("prev")
+        x.removeClass("prev");
       }
     }
-  }
+  };
 
   this.switchDisplayImageByIndex = function (prevIndex, nextIndex) {
     this.hideDisplayImageByIndex(prevIndex);
     this.setCurrentDisplayImageByIndex(nextIndex);
-  }
+  };
 
   this.getCurrentDisplayImageContextAndIndex = function () {
     let result = {};
@@ -173,7 +174,7 @@ function Carousel() {
         }
       });
     return result;
-  }
+  };
 
   this.checkAndSetCurrentDisplayImage = function () {
     let noCurrentDisplayImage = true;
@@ -187,7 +188,7 @@ function Carousel() {
           numberOfCurrentDisplayImages++;
         }
       });
-    
+
     if (noCurrentDisplayImage) {
       // if there is no `current` entry found
       this.log("there is no `current` entry in the carousel image items");
@@ -199,7 +200,9 @@ function Carousel() {
       this.log("`current` entry of image has been set in first item");
     } else if (numberOfCurrentDisplayImages > 1) {
       // should not be happened but if there are multiple number of `current` entry
-      this.log(`there were ${numberOfCurrentDisplayImages} image entries found`);
+      this.log(
+        `there were ${numberOfCurrentDisplayImages} image entries found`
+      );
       this.log("erasing `current` from all of image items...");
 
       // erase `current` from all of items
@@ -217,7 +220,7 @@ function Carousel() {
       // only one `current` entry found
       this.log("`current` entry found in the carousel image items");
     }
-  }
+  };
 
   this.checkAndSetCurrentEntry = function () {
     let noCurrentEntry = true;
@@ -288,7 +291,7 @@ function Carousel() {
 
   this.getNumberOfDisplayImages = function () {
     return $(".carousel-context").children(".carousel-item").length;
-  }
+  };
 
   this.moveToNextCarouselEntry = function () {
     let currentEntry = this.getCurrentEntryContextAndIndex();
@@ -319,23 +322,28 @@ function Carousel() {
       currentDisplayImageEntry.index + 1 > numberOfDisplayImages - 1
         ? 0
         : currentDisplayImageEntry.index + 1;
-    
+
     this.log(`next carousel display image index is ${nextDisplayImageIndex}`);
 
-    this.switchDisplayImageByIndex(currentDisplayImageEntry.index, nextDisplayImageIndex)
+    this.switchDisplayImageByIndex(
+      currentDisplayImageEntry.index,
+      nextDisplayImageIndex
+    );
 
     if (nextDisplayImageIndex === 0) {
       // clear all `prev` since we rearched the last entry
       this.hideAllDisplayImages();
     }
-  }
+  };
 
   this.setProgressBarProgressByIndex = function (index, progress) {
-    let entry = this.getEntryByIndex(index)
+    let entry = this.getEntryByIndex(index);
     let pagerProgressBarElement = $(entry).children(".carousel-pager-progress");
 
     if (!pagerProgressBarElement) {
-      this.log("ERR: failed to locate `carousel-pager-progress` in its children");
+      this.log(
+        "ERR: failed to locate `carousel-pager-progress` in its children"
+      );
       return;
     }
 
@@ -343,7 +351,7 @@ function Carousel() {
       "transform",
       `translate3d(0px, 0px, 0px) scale(${progress}, 1)`
     );
-  }
+  };
 
   // increase progressbar of current entry
   // `progress` parameter must have 0.0 - 1.0 floating value
@@ -376,14 +384,16 @@ function Carousel() {
     }
 
     this.log("playing...");
-    
+
     carouselProgressTimer = window.setInterval(() => {
       if (progress >= maxProgress) {
         this.log("carousel has ended");
         // to prevent floating number like 0.99000008 looked like a bit incomplete
         this.setCurrentEntryProgressBar(1.0);
+
         this.moveToNextCarouselEntry();
         this.moveToNextDisplayImage();
+
         // reset the progress
         progress = 0;
         return;
@@ -395,8 +405,8 @@ function Carousel() {
       progress += 0.01;
     }, interval);
 
-    this.log("the carousel is now playing")
-    playState = CAROUSEL_STATES.PLAYING
+    this.log("the carousel is now playing");
+    playState = CAROUSEL_STATES.PLAYING;
   };
 
   this.pause = function () {
@@ -406,13 +416,13 @@ function Carousel() {
     }
 
     if (!carouselProgressTimer) {
-      this.log("there are no progress timer available")
+      this.log("there are no progress timer available");
       return;
     }
 
-    clearInterval(carouselProgressTimer)
+    clearInterval(carouselProgressTimer);
     carouselProgressTimer = null;
-    playState = CAROUSEL_STATES.PAUSED
+    playState = CAROUSEL_STATES.PAUSED;
   };
 }
 
