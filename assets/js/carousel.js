@@ -300,6 +300,7 @@ function Carousel() {
 
     this.log(`there are ${numberOfCarousels} carousels`);
 
+    // if we rearched last index, come back to the first index (zero)
     let nextCarouselIndex =
       currentEntry.index + 1 > numberOfCarousels - 1
         ? 0
@@ -320,6 +321,7 @@ function Carousel() {
 
     this.log(`there are ${numberOfDisplayImages} carousel display images`);
 
+    // if we rearched last index, come back to the first index (zero)
     let nextDisplayImageIndex =
       currentDisplayImageEntry.index + 1 > numberOfDisplayImages - 1
         ? 0
@@ -338,6 +340,7 @@ function Carousel() {
     }
   };
 
+  // set the specific progressbar progress by index
   this.setProgressBarProgressByIndex = function (index, progress) {
     let entry = this.getEntryByIndex(index);
     let pagerProgressBarElement = $(entry).children(".carousel-pager-progress");
@@ -379,6 +382,7 @@ function Carousel() {
     );
   };
 
+  // play the carousel
   this.play = function () {
     if (this.playState === CAROUSEL_STATES.PLAYING) {
       this.log("the carousel is already playing");
@@ -411,6 +415,7 @@ function Carousel() {
     playState = CAROUSEL_STATES.PLAYING;
   };
 
+  // pause the carousel
   this.pause = function () {
     if (this.playState === CAROUSEL_STATES.PAUSED) {
       this.log("the carousel is already paused");
@@ -424,6 +429,7 @@ function Carousel() {
 
     clearInterval(carouselProgressTimer);
     carouselProgressTimer = null;
+    
     playState = CAROUSEL_STATES.PAUSED;
   };
 }
