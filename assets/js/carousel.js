@@ -35,11 +35,13 @@ function Carousel() {
     $(".carousel-toggle-button").on("click", () => {
       // should not be happened
       if (
+        // repair if both "none"
         $(".carousel-toggle-play").css("display") === "none" &&
         $(".carousel-toggle-pause").css("display") === "none"
       ) {
         $(".carousel-toggle-play").css("display", "block");
       } else if (
+        // repair if both "none"
         $(".carousel-toggle-play").css("display") === "block" &&
         $(".carousel-toggle-pause").css("display") === "block"
       ) {
@@ -47,12 +49,12 @@ function Carousel() {
       }
 
       let isPlaying = $(".carousel-toggle-play").css("display") === "none";
+
+      // swap the icon
       $(".carousel-toggle-pause").css("display", isPlaying ? "none" : "block");
       $(".carousel-toggle-play").css("display", isPlaying ? "block" : "none");
 
       isPlaying ? this.pause() : this.play();
-      playState = isPlaying ? CAROUSEL_STATES.PLAYING : CAROUSEL_STATES.PAUSED;
-      console.log(playState);
     });
 
     // event handler for dot pager buttons
