@@ -28,7 +28,7 @@ function Carousel() {
     PAUSED: 2,
   };
 
-  var isDebug = true;
+  var isDebug = false;
   var isInitialized = false;
   var playState = CAROUSEL_STATES.PAUSED;
   var carouselProgressTimer;
