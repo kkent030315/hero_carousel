@@ -225,12 +225,12 @@ function Carousel() {
             this.log("there is no `current` entry in the carousel image items");
             this.log("setting `current` entry in first image item...");
 
-            // set `current` in first item of `carousel-pagers`
+            // set `current` in first item of `carousel-context`
             this.setCurrentDisplayImageByIndex(0);
 
             this.log("`current` entry of image has been set in first item");
         } else if (numberOfCurrentDisplayImages > 1) {
-            // should not be happened but if there are multiple number of `current` entry
+            // should not be happened but if there are multiple numbers of `current` entry
             this.log(
                 `there were ${numberOfCurrentDisplayImages} image entries found`
             );
